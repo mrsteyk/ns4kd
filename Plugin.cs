@@ -26,10 +26,10 @@ public class Plugin : BasePlugin
         Log = base.Log;
         Log.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
 
-        MSAA = Config.Bind("Quality", "MSAA", -1, "Override MSAA levels. -1 - Don't override.");
+        MSAA = Config.Bind("Quality", "MSAA", -1, "Override MSAA levels. -1 - Don't override. !!!BREAKS TRANSPARENT MATERIALS!!!");
         SMAA = Config.Bind("Quality", "SMAA", -1, "Override SMAA quality. -1 - Don't override, 0 - disable, 1 - low, 2 - medium, 3 - high");
         NoVSync = Config.Bind("Quality", "NoVSync", false);
-        Aniso = Config.Bind("Quality", "ForceAniso", -1, "Force this anisoLevel");
+        Aniso = Config.Bind("Quality", "ForceAniso", -1, "Force this anisoLevel. !!!Breaks some textures!!!");
 
         // TODO
 
@@ -46,6 +46,7 @@ public class Plugin : BasePlugin
         {
             Log.LogInfo($"Unity had AA {UnityEngine.QualitySettings.antiAliasing}, URP had MSAA {urpAsset.msaaSampleCount}, override to {MSAA.Value}");
             UnityEngine.QualitySettings.antiAliasing = MSAA.Value;
+            // TODO(mrsteyk): !!!MSAA breaks transparent materials!!!
             urpAsset.msaaSampleCount = MSAA.Value;
         }
 
